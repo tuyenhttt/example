@@ -48,7 +48,7 @@ button.create-button:hover {
     margin-top: 20px;
 }
 
-#questions li {
+li {
     list-style: none;
     padding: 10px;
     border-bottom: 1px solid #ccc;

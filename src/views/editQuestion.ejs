@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Question</title>
+    <link rel="stylesheet" href="../styles/common.css">
+</head>
+
+<body>
+    <h1>Edit Question</h1>
+    <form id="question-form">
+        <input type="hidden" id="id" value="<%= question._id %>">
+        <label for="text">Question Text:</label>
+        <input type="text" id="text" name="text" value="<%= question.text %>" required>
+
+        <label for="options">Options (comma separated):</label>
+        <input type="text" id="options" name="options" value="<%= question.options.join(', ') %>" required>
+
+        <label for="correctAnswer">Correct Answer:</label>
+        <input type="text" id="correctAnswer" name="correctAnswer" value="<%= question.correctAnswer %>" required>
+
+        <button type="submit">Update Question</button>
+    </form>
+    <button onclick="window.location.href='/question'">Back to Questions</button>
+
+    <script>
+        document.getElementById('question-form').onsubmit = async function (event) {
+            event.preventDefault();
+            const id = document.getElementById('id').value;
+            const text = document.getElementById('text').value;
+            const options = document.getElementById('options').value.split(',').map(opt => opt.trim());
+            const correctAnswer = document.getElementById('correctAnswer').value;
+
+            const response = await fetch(`https://nodejs-quizz-app-api.onrender.com/questions/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, options, correctAnswer }),
+            });
+
+            if (response.ok) {
+                alert('Question updated successfully');
+                window.location.href = '/question'; // Redirect to questions list
+            } else {
+                alert('Error updating question');
+            }
+        };
+    </script>
+</body>
+
+</html>
