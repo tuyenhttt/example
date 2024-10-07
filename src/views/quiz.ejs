@@ -4,23 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Home</title>
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/common.css">
 </head>
 
 <body>
+
     <div class="header">
         <div class="header-left">
-            <a class="active" href="/">Home</a>
+            <a href="/">Home</a>
             <a href="/question">Question</a>
-            <a href="/quiz">Quiz</a>
+            <a class="active" href="/quiz">Quiz</a>
         </div>
     </div>
 
     <div>
-        <h1 class="heading">QUIZ PAGE</h1>
+        <h1 class="heading">QUIZZE PAGE</h1>
+
+        <div>
+            <button onclick="createQuiz()">Create New Quiz</button>
+        </div>
+
+        <div id="question-list">
+            <h2 class="heading2">All Quizzes</h2>
+            <ul id="quizzes"></ul>
+        </div>
     </div>
+
+    <script>
+        // Function to fetch questions from the API and display them
+        async function fetchQuizzes() {
+            try {
+                const response = await fetch('https://nodejs-quizz-app-api.onrender.com/quizzes');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const quizzes = await response.json();
+
+                // Get the question list container
+                const quizzesList = document.getElementById('quizzes');
+
+                // Clear any existing content
+                quizzesList.innerHTML = '';
+
+                // Loop through questions and add them to the list
+                quizzes.forEach(quizz => {
+                    const quizzItem = document.createElement('li');
+                    quizzItem.innerHTML = `
+                        ${quizzes.text}
+                        <div class="button-group">
+                            <button class="view-button" onclick="viewQuestion('${quizzes._id}')">View</button>
+                            <button class="edit-button" onclick="editQuestion('${quizzes._id}')">Edit</button>
+                            <button class="delete-button" onclick="deleteQuestion('${quizzes._id}')">Delete</button>
+                        </div>
+                    `;
+                    questionList.appendChild(questionItem);
+                });
+
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+            }
+        }
+
+        // Function to view question details
+        function viewQuizz(id) {
+            window.location.href = `/quizzes/${id}`;
+        }
+
+        // Function to edit a question
+        function editQuizz(id) {
+            window.location.href = `/quizzes/edit/${id}`;
+        }
+
+        // Function to create a new question
+        function createQuizz() {
+            window.location.href = `/quizzes/new`;
+        }
+
+        // Function to delete a question
+        async function deletefetchQuizz(id) {
+            const confirmed = confirm('Are you sure you want to delete this question?');
+            if (confirmed) {
+                try {
+                    const response = await fetch(`https://nodejs-quizz-app-api.onrender.com/quizzes/${id}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (response.ok) {
+                        alert('Question deleted successfully');
+                        fetchQuizzes(); // Refresh the question list
+                    } else {
+                        alert('Failed to delete question');
+                    }
+                } catch (error) {
+                    console.error('Error deleting question:', error);
+                }
+            }
+        }
+
+        window.onload = fetchQuizzes;
+    </script>
+
 </body>
 
 </html>

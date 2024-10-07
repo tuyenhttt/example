@@ -10,3 +10,89 @@ button {
     border: none;
     font-size: 1rem;
 }
+
+/* Common button styles */
+button {
+    padding: 10px 15px;
+    margin-left: 30px;
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button.create-button {
+    background-color: #28a745;
+}
+
+button.create-button:hover {
+    background-color: #218838;
+}
+
+#question-list {
+    margin-top: 20px;
+}
+
+#questions li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#questions li div {
+    display: flex;
+    gap: 10px;
+}
+
+h2.heading2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    margin-left: 25px;
+}
+
+#questions li .action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+button.view-button {
+    background-color: #17a2b8;
+}
+
+button.edit-button {
+    background-color: #ffc107;
+}
+
+button.delete-button {
+    background-color: #dc3545;
+}
+
+button.view-button:hover {
+    background-color: #138496;
+}
+
+button.edit-button:hover {
+    background-color: #e0a800;
+}
+
+button.delete-button:hover {
+    background-color: #c82333;
+}
